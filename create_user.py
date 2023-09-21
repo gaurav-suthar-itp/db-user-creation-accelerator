@@ -106,9 +106,6 @@ def execute_sql(sql_statement):
     finally:
         connection.close()
 
-
-# Create the new user
-
 query_list = []
 
 for credentials in credential_list:
