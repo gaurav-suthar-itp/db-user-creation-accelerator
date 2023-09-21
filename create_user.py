@@ -83,7 +83,11 @@ credential_list =[]
 
 for user in users:
     credential_list.append(get_secret(user))
-    
+
+##############################################################
+########### DB-CONNECTION AND QUERY-EXECUTION ##########
+##############################################################
+
 rds = boto3.client('rds')
 
 # Get the endpoint address of the RDS instance
