@@ -7,12 +7,10 @@ from botocore.exceptions import ClientError
 ##############################################################
 #####################   INPUTS  ##############################
 ##############################################################
-users=['demo1','demo2']
+users=['demo10','demo11']
 db_identifier = "database-2-instance-1"
-admin_username = 'admin'
-admin_password = 'admin1234'
+admin_secret_name = "rds/user/admin"
 aws_region = 'us-east-1'
-
 ##############################################################
 ################ CREATE A SECRET FOR EACH USER ###############
 ##############################################################
@@ -53,7 +51,10 @@ for secret_data in secrets:
 ##############################################################
 
 def get_secret(user_secret):
-    secret_name = f"rds/user/{user_secret}"
+    if user_secret is admin_secret_name:
+        secret_name = admin_secret_name
+    else:
+        secret_name = f"rds/user/{user_secret}"
     region_name = "us-east-1"
 
     # Create a Secrets Manager client
@@ -77,6 +78,11 @@ def get_secret(user_secret):
     }
 
     return credentials
+
+admin_secret = get_secret(admin_secret_name)
+
+admin_username = admin_secret['username']
+admin_password = admin_secret['password']
 
 credential_list =[]
 
